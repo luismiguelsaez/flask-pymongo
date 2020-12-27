@@ -23,14 +23,16 @@ class Stock(Resource):
     def put(self, stock_id):
 
         parser = reqparse.RequestParser()
-        parser.add_argument('name', location='form')
+        parser.add_argument("name", required=True, help="Stock name is required")
         args = parser.parse_args()
 
-        #data = request.json
         stock_search = mongo.db.stocks.find_one({"id": stock_id})
+
         if stock_search:
             abort(409, "Stock ID already in database")
+
         mongo.db.stocks.insert_one({ "id": stock_id, "name": args['name']})
+
         return {"error":"Stock inserted"}
 
 api.add_resource(Stock, '/<string:stock_id>')
