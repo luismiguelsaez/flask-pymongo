@@ -12,6 +12,9 @@ run:
 		docker run --network test --name test_db -d -p 27017:27017 mongo:4 \
 	)
 
+test:
+	pytest code/test.py
+
 clean:
 	( \
 		docker rm -f test_app test_db && \
