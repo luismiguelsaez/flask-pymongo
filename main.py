@@ -5,7 +5,7 @@ from os import environ
 from json import loads
 
 app = Flask(__name__)
-app.config["MONGO_URI"] = "mongodb://localhost:27017/stocks"
+app.config["MONGO_URI"] = "mongodb://localhost:27017/invest"
 mongo = PyMongo(app)
 api = Api(app)
 
@@ -31,9 +31,22 @@ class Stock(Resource):
         if stock_search:
             abort(409, "Stock ID already in database")
 
-        mongo.db.stocks.insert_one({ "id": stock_id, "name": args['name']})
+        try:
+            mongo.db.stocks.insert_one({ "id": stock_id, "name": args['name'] })
+        except:
+            abort(500, "Database error")
 
-        return {"error":"Stock inserted"}
+        return {}, 201
+
+    def delete(self, stock_id):
+
+        try:
+            mongo.db.stocks.delete_one({ "id": stock_id })
+        except:
+            abort(500, "Database error")
+
+        return {}, 200
+
 
 api.add_resource(Stock, '/<string:stock_id>')
 
