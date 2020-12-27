@@ -51,4 +51,4 @@ class Stock(Resource):
 api.add_resource(Stock, '/<string:stock_id>')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", debug=False)
