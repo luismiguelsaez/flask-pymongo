@@ -2,7 +2,6 @@ from flask import Flask, abort
 from flask_restful import Resource, Api, request, reqparse
 from flask_pymongo import PyMongo
 from os import environ
-from json import loads
 
 app = Flask(__name__)
 app.config["MONGO_URI"] = "mongodb://localhost:27017/invest"
