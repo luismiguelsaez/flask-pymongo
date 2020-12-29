@@ -27,7 +27,7 @@ jobs:
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
     - name: Push image
       run: |
-        docker tag app:test ${{ secrets.DOCKERHUB_USERNAME }}/flask-ci-api:${{ github.run_number }}
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/flask-ci-api:${{ github.run_number }}
+        docker tag app:test ${{ secrets.DOCKERHUB_USERNAME }}/flask-ci-api:${{ process.env.GITHUB_REF }}
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/flask-ci-api:${{ process.env.GITHUB_REF }}
     - name: Clean
       run: make clean
