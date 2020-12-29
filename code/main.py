@@ -44,6 +44,16 @@ class Stock(Resource):
 
         return {}, 201
 
+    def post(self, stock_id):
+
+        parser = reqparse.RequestParser()
+        parser.add_argument("name", required=True, help="Stock name is required")
+        args = parser.parse_args()
+
+        mongo.db.stocks.update_one({"id": stock_id},{ "$set": { "name": args['name'] } })
+
+        return {}, 204
+
     def delete(self, stock_id):
 
         try:
