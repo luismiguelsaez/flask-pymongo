@@ -36,7 +36,7 @@ spec:
     spec:
       containers:
       - name: stockapi
-        image: $REGISTRY_USER/$APP_NAME:$APP_VERSION
+        image: luismiguelsaez/flask-ci-api:8
         env:
           - name: MONGO_HOST
             value: "stockapi-database"

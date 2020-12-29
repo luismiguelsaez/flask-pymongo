@@ -4,7 +4,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: userapi-database
+  name: stockapi-database
   namespace: default
 spec:
   ports:
@@ -13,7 +13,7 @@ spec:
       port: 27017
       targetPort: 27017
   selector:
-    app: userapi-database
+    app: stockapi-database
 
 ---
 
