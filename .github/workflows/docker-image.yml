@@ -20,7 +20,7 @@ jobs:
       id: scan
       uses: anchore/scan-action@v2
       with:
-        image: api-ci:${{ github.run_number }}
+        image: flask-ci_api:latest
         fail-build: false
         severity-cutoff: critical
     - name: Login to Docker Hub
@@ -30,7 +30,7 @@ jobs:
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
     - name: Push image
       run: |
-        docker tag api-ci:${{ github.run_number }} ${{ secrets.DOCKERHUB_USERNAME }}/api-ci:${{ github.run_number }}
+        docker tag flask-ci_api ${{ secrets.DOCKERHUB_USERNAME }}/api-ci:${{ github.run_number }}
         docker push luismiguelsaez/api-ci:${{ github.run_number }}
     - name: Clean
       run: make clean
