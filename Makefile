@@ -19,4 +19,13 @@ clean:
 	docker-compose down --rmi local -v
 
 deploy:
-	kubectl apply -f k8s
+	( \
+		kubectl apply -f k8s/database.yml && \
+		envsubst < k8s/application.yml | kubectl apply -f - \
+	)
+
+rollback:
+	( \
+		envsubst < k8s/application.yml | kubectl delete -f - && \
+		kubectl delete -f k8s/database.yml \
+	)
