@@ -1,0 +1,41 @@
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: userapi-database
+  namespace: default
+spec:
+  ports:
+    - protocol: TCP
+      name: api
+      port: 27017
+      targetPort: 27017
+  selector:
+    app: userapi-database
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stockapi-database
+  namespace: default
+  labels:
+    app: stockapi-database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stockapi-database
+  template:
+    metadata:
+      labels:
+        app: stockapi-database
+    spec:
+      containers:
+      - name: stockapi-database
+        image: mongo:4
+        ports:
+        - containerPort: 27017

@@ -1,0 +1,48 @@
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: stockapi
+  namespace: default
+spec:
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      name: api
+      port: 80
+      targetPort: 5000
+  selector:
+    app: stockapi
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stockapi
+  namespace: default
+  labels:
+    app: stockapi
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: stockapi
+  template:
+    metadata:
+      labels:
+        app: stockapi
+    spec:
+      containers:
+      - name: stockapi
+        image: $REGISTRY_USER/$APP_NAME:$APP_VERSION
+        env:
+          - name: MONGO_HOST
+            value: "stockapi-database"
+          - name: MONGO_PORT
+            value: "27017"
+          - name: MONGO_DB
+            value: "invest"
+        ports:
+        - containerPort: 5000

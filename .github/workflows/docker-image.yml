@@ -14,6 +14,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Build application
+      run: docker build -t app:test app
     - name: Start application
       run: make run
     - name: Test application
@@ -25,7 +27,7 @@ jobs:
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
     - name: Push image
       run: |
-        docker tag flask-ci_api ${{ secrets.DOCKERHUB_USERNAME }}/flask-ci-api:${{ github.run_number }}
+        docker tag app:test ${{ secrets.DOCKERHUB_USERNAME }}/flask-ci-api:${{ github.run_number }}
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/flask-ci-api:${{ github.run_number }}
     - name: Clean
       run: make clean

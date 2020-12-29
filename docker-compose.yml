@@ -10,7 +10,7 @@ volumes:
 
 services:
   api:
-    build: app
+    image: ${APP_NAME}:${APP_TAG}
     environment:
       MONGO_HOST: db
       MONGO_DB: invest

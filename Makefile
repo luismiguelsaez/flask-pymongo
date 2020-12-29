@@ -1,9 +1,18 @@
 
+APP_NAME := app
+APP_TAG := test
+
+build:
+	docker build -t $(APP_NAME):$(APP_TAG) app
+
 run:
-	docker-compose up -d --build
+	( \
+		export APP_NAME=$(APP_NAME) APP_TAG=$(APP_TAG) && \
+		docker-compose up -d --build \
+	)
 
 testing: run
 	docker-compose exec test pytest /test/main.py
 
-clean: run testing
+clean:
 	docker-compose down --rmi local -v
