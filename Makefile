@@ -25,4 +25,4 @@ clean-docker:
 	)
 
 clean:
-	docker-compose down
+	docker-compose down --rmi local -v
