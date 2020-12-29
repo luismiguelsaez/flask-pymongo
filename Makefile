@@ -1,14 +1,15 @@
+#!make
 
-APP_NAME := app
-APP_TAG := test
+include ENVIRONMENT  
+export $(shell sed 's/=.*//' envfile)
 
 build:
-	docker build -t $(APP_NAME):$(APP_TAG) app
+	docker build -t ${APP_NAME}:${APP_TAG} app
 
 run:
 	( \
-		export APP_NAME=$(APP_NAME) APP_TAG=$(APP_TAG) && \
-		docker-compose up -d --build \
+		export APP_NAME=${APP_NAME} APP_TAG=${APP_TAG} && \
+		docker-compose up -d \
 	)
 
 testing: run
@@ -16,3 +17,6 @@ testing: run
 
 clean:
 	docker-compose down --rmi local -v
+
+deploy:
+	kubectl apply -f k8s
