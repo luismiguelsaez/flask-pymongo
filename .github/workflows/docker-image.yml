@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build application
-      run: docker build -t app:test app
+      run: make build
     - name: Start application
       run: make run
     - name: Test application
