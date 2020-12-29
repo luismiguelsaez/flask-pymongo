@@ -3,7 +3,7 @@ APP_NAME := app
 APP_TAG := test
 
 build:
-	docker build -t $(APP_NAME):$(APP_TAG) .
+	docker build -t $(APP_NAME):$(APP_TAG) app
 
 run:
 	docker-compose up -d --build
