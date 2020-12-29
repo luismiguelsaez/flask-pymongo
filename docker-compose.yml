@@ -10,7 +10,7 @@ volumes:
 
 services:
   api:
-    build: .
+    build: app
     environment:
       MONGO_HOST: db
       MONGO_DB: invest
@@ -22,6 +22,15 @@ services:
       - test
     depends_on:
       - db
+  test:
+    build: test
+    environment:
+      APP_HOST: api
+      APP_PORT: 5000
+    networks:
+      - test
+    depends_on:
+      - api
   db:
     image: mongo:4
     expose:

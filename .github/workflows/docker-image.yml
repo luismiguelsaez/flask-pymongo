@@ -16,13 +16,8 @@ jobs:
     - uses: actions/checkout@v2
     - name: Start application
       run: make run
-    - name: Scan image
-      id: scan
-      uses: anchore/scan-action@v2
-      with:
-        image: flask-ci_api:latest
-        fail-build: false
-        severity-cutoff: critical
+    - name: Test application
+      run: make test
     - name: Login to Docker Hub
       uses: docker/login-action@v1
       with:

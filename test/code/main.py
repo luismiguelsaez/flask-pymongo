@@ -1,8 +1,12 @@
 import requests
 import pytest
 import json
+from os import environ
 
-BASE_URL = "http://127.0.0.1:5000"
+APP_HOST = environ["APP_HOST"] if "APP_HOST" in environ else "localhost"
+APP_PORT = environ["APP_PORT"] if "APP_PORT" in environ else "5000"
+
+BASE_URL = "http://" + APP_HOST + ":" + APP_PORT
 
 def test_put_stock_code_201(): 
     result = requests.put(BASE_URL + '/ABBV', json={"name":"Abbvie Corp."})
