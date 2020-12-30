@@ -15,7 +15,7 @@ def test_put_stock_code_201():
 def test_get_stock_code_200_and_text():
     result = requests.get(BASE_URL + '/ABBV')
     assert result.status_code == 200
-    assert json.loads(result.text) == {"name":"Abbvie Corp."}
+    assert json.loads(result.text) == {"id":"ABBV","name":"Abbvie Corp."}
 
 def test_post_stock_code_204():
     result = requests.post(BASE_URL + '/ABBV', json={"name":"Abbvie Corporation"})
@@ -25,7 +25,7 @@ def test_post_stock_code_204():
 def test_get_stock_code_200_and_text_after_update():
     result = requests.get(BASE_URL + '/ABBV')
     assert result.status_code == 200
-    assert json.loads(result.text) == {"name":"Abbvie Corporation"}
+    assert json.loads(result.text) == {"id":"ABBV","name":"Abbvie Corporation"}
 
 def test_delete_stock_code_200():
     result = requests.delete(BASE_URL + '/ABBV')
