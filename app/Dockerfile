@@ -6,10 +6,11 @@ EXPOSE 5000
 
 RUN mkdir /app
 WORKDIR /app
-ADD code/ .
 ADD requirements.txt .
 
 RUN pip install -r requirements.txt
+
+ADD code/ .
 
 ENV FLASK_APP=main.py
 ENV FLASK_ENV=development

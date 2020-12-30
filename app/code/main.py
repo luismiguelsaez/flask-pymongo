@@ -17,14 +17,14 @@ class Stock(Resource):
     def get(self, stock_id):
 
         try:
-            stock_search = mongo.db.stocks.find_one({"id": stock_id})
+            stock_search = mongo.db.stocks.find_one({"id": stock_id},{"_id": False})
         except:
             abort(500, "Database error")
 
         if not stock_search:
             abort(404, "Stock ID not found")
 
-        return {"name":stock_search["name"]}, 200
+        return stock_search, 200
 
     def put(self, stock_id):
 
