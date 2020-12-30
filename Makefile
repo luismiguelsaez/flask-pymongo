@@ -8,7 +8,7 @@ APP_TAG := $(shell git branch --show-current)
 build:
 	docker build -t ${APP_NAME}:${APP_TAG} app
 
-run:
+run: build
 	( \
 		export APP_NAME=${APP_NAME} APP_TAG=$(APP_TAG) && \
 		docker-compose up -d \
