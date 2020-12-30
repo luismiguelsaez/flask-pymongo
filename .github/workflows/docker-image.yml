@@ -20,3 +20,7 @@ jobs:
       run: make test
     - name: Clean
       run: make clean
+    - name: automerge
+      uses: "pascalgn/automerge-action@v0.13.0"
+      env:
+        GITHUB_TOKEN: "${{ secrets.GIT_TOKEN }}"
