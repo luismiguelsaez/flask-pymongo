@@ -1,7 +1,7 @@
 #!make
 
 include ENVIRONMENT  
-export $(shell sed 's/=.*//' envfile)
+export $(shell sed 's/=.*//' ENVIRONMENT)
 
 APP_TAG := $(shell git branch --show-current)
 
