@@ -3,14 +3,12 @@
 include ENVIRONMENT  
 export $(shell sed 's/=.*//' ENVIRONMENT)
 
-APP_TAG := $(shell git branch --show-current)
-
 build:
 	docker build -t ${APP_NAME}:${APP_TAG} app
 
 run: build
 	( \
-		export APP_NAME=${APP_NAME} APP_TAG=$(APP_TAG) && \
+		export APP_NAME=${APP_NAME} APP_TAG=${APP_TAG} && \
 		docker-compose up -d \
 	)
 
