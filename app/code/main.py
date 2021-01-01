@@ -4,7 +4,6 @@ from flask_pymongo import PyMongo
 from os import environ
 import logging
 
-
 MONGO_HOST = environ["MONGO_HOST"] if "MONGO_HOST" in environ else "localhost"
 MONGO_PORT = environ["MONGO_PORT"] if "MONGO_PORT" in environ else "27017"
 MONGO_DB = environ["MONGO_DB"] if "MONGO_DB" in environ else "test"
