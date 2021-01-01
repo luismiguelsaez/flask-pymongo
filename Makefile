@@ -13,7 +13,7 @@ run: build
 	)
 
 testing: run
-	docker-compose exec test pytest /test/main.py
+	docker-compose exec -T test pytest /test/main.py
 
 clean:
 	docker-compose down --rmi local -v
