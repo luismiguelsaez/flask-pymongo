@@ -9,11 +9,11 @@ build:
 run: build
 	( \
 		export APP_NAME=${APP_NAME} APP_TAG=${APP_TAG} && \
-		docker-compose up -d \
+		docker-compose up -d --build \
 	)
 
 testing: run
-	docker-compose exec test pytest /test/main.py
+	docker-compose exec -T test pytest /test/main.py
 
 clean:
 	docker-compose down --rmi local -v
