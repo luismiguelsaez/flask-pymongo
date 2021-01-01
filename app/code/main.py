@@ -10,7 +10,12 @@ MONGO_PORT = environ["MONGO_PORT"] if "MONGO_PORT" in environ else "27017"
 MONGO_DB = environ["MONGO_DB"] if "MONGO_DB" in environ else "test"
 
 app = Flask(__name__)
-logging.basicConfig(level=logging.DEBUG)
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s"
+)
+
 app.config["MONGO_URI"] = "mongodb://" + MONGO_HOST + ":" + MONGO_PORT + "/" + MONGO_DB
 mongo = PyMongo(app)
 api = Api(app)
