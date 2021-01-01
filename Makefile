@@ -9,7 +9,7 @@ build:
 run: build
 	( \
 		export APP_NAME=${APP_NAME} APP_TAG=${APP_TAG} && \
-		docker-compose up -d \
+		docker-compose up -d --build \
 	)
 
 testing: run
