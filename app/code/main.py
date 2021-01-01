@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 logging.basicConfig(
     level=logging.DEBUG,
-    format="%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s"
+    format="%(asctime)s %(levelname)s : %(message)s"
 )
 
 app.config["MONGO_URI"] = "mongodb://" + MONGO_HOST + ":" + MONGO_PORT + "/" + MONGO_DB
@@ -31,6 +31,7 @@ class Stock(Resource):
             abort(500, "Database error")
 
         if not stock_search:
+            app.logger.info("Stock ID [" + stock_id + "] not found in database")
             abort(404, "Stock ID not found")
 
         return stock_search, 200
@@ -44,6 +45,7 @@ class Stock(Resource):
         stock_search = mongo.db.stocks.find_one({"id": stock_id})
 
         if stock_search:
+            app.logger.info("Stock ID [" + stock_id + "] already in database in database")
             abort(409, "Stock ID already in database")
 
         try:
