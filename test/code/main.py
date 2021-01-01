@@ -8,6 +8,10 @@ APP_PORT = environ["APP_PORT"] if "APP_PORT" in environ else "5000"
 
 BASE_URL = "http://" + APP_HOST + ":" + APP_PORT
 
+def test_get_stock_code_404():
+    result = requests.get(BASE_URL + '/ABBV')
+    assert result.status_code == 404
+
 def test_put_stock_code_201(): 
     result = requests.put(BASE_URL + '/ABBV', json={"name":"Abbvie Corp."})
     assert result.status_code == 201

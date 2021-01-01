@@ -45,7 +45,7 @@ class Stock(Resource):
         stock_search = mongo.db.stocks.find_one({"id": stock_id})
 
         if stock_search:
-            app.logger.info("Stock ID [" + stock_id + "] already in database in database")
+            app.logger.info("Stock ID [" + stock_id + "] already in database")
             abort(409, "Stock ID already in database")
 
         try:
