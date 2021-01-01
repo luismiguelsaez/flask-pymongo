@@ -3,20 +3,15 @@ from flask_restful import Resource, Api, request, reqparse
 from flask_pymongo import PyMongo
 from os import environ
 import logging
-from pythonjsonlogger import jsonlogger
 
-logger = logging.getLogger()
-logHandler = logging.StreamHandler()
-formatter = jsonlogger.JsonFormatter()
-logHandler.setFormatter(formatter)
-logger.addHandler(logHandler)
 
 MONGO_HOST = environ["MONGO_HOST"] if "MONGO_HOST" in environ else "localhost"
 MONGO_PORT = environ["MONGO_PORT"] if "MONGO_PORT" in environ else "27017"
 MONGO_DB = environ["MONGO_DB"] if "MONGO_DB" in environ else "test"
 
 app = Flask(__name__)
-app.config["MONGO_URI"] = "mongodb://" + MONGO_HOST + ":" + MONGO_PORT + "/" + MONGO_DB 
+logging.basicConfig(level=logging.DEBUG)
+app.config["MONGO_URI"] = "mongodb://" + MONGO_HOST + ":" + MONGO_PORT + "/" + MONGO_DB
 mongo = PyMongo(app)
 api = Api(app)
 
@@ -27,6 +22,7 @@ class Stock(Resource):
         try:
             stock_search = mongo.db.stocks.find_one({"id": stock_id},{"_id": False})
         except:
+            app.logger.critical("Database connection error")
             abort(500, "Database error")
 
         if not stock_search:
@@ -48,6 +44,7 @@ class Stock(Resource):
         try:
             mongo.db.stocks.insert_one({ "id": stock_id, "name": args['name'] })
         except:
+            app.logger.critical("Database connection error")
             abort(500, "Database error")
 
         return {}, 201
@@ -58,7 +55,11 @@ class Stock(Resource):
         parser.add_argument("name", required=True, help="Stock name is required")
         args = parser.parse_args()
 
-        mongo.db.stocks.update_one({"id": stock_id},{ "$set": { "name": args['name'] } })
+        try:
+            mongo.db.stocks.update_one({"id": stock_id},{ "$set": { "name": args['name'] } })
+        except:
+            app.logger.critical("Database connection error")
+            abort(500, "Database error")
 
         return {}, 204
 
@@ -67,6 +68,7 @@ class Stock(Resource):
         try:
             mongo.db.stocks.delete_one({ "id": stock_id })
         except:
+            app.logger.critical("Database connection error")
             abort(500, "Database error")
 
         return {}, 200
