@@ -2,6 +2,14 @@ from flask import Flask, abort
 from flask_restful import Resource, Api, request, reqparse
 from flask_pymongo import PyMongo
 from os import environ
+import logging
+from pythonjsonlogger import jsonlogger
+
+logger = logging.getLogger()
+logHandler = logging.StreamHandler()
+formatter = jsonlogger.JsonFormatter()
+logHandler.setFormatter(formatter)
+logger.addHandler(logHandler)
 
 MONGO_HOST = environ["MONGO_HOST"] if "MONGO_HOST" in environ else "localhost"
 MONGO_PORT = environ["MONGO_PORT"] if "MONGO_PORT" in environ else "27017"
