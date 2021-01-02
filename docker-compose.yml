@@ -39,3 +39,23 @@ services:
       - mongodata:/var/lib/mongo
     networks:
       - test
+  db-sql:
+    image: mysql:mysql:5.7
+    expose:
+      - 3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test
+    volumes:
+      - mysqldata:/var/lib/mysql
+    networks:
+      - test
+  db-sql-setup:
+    build: db-sql-setup
+    environment:
+      MYSQL_HOST: db-sql
+      MYSQL_DB: test
+      MYSQL_USER: root
+      MYSQL_PASS: root
+    networks:
+      - test
