@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import environ
+from bcrypt import hashpw, gensalt
 
 MYSQL_HOST = environ["MYSQL_HOST"] if "MYSQL_HOST" in environ else "localhost"
 MYSQL_PORT = environ["MYSQL_PORT"] if "MYSQL_PORT" in environ else "3306"
@@ -20,7 +21,8 @@ class User(db.Model):
 
 db.create_all()
 
-admin = User(name="admin",email="",password="")
+admin_pw = "test"
+admin = User(name="admin",email="test@dummy.com",password=hashpw(admin_pw.encode(), gensalt()))
 
 db.session.add(admin)
 db.session.commit()
